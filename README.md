@@ -1,94 +1,110 @@
 # 🔗 SimplifyLink
 
-> A production-style URL shortening and analytics service built with ASP.NET Core, Entity Framework Core, SQLite, and xUnit.
+> A production-style URL shortening and analytics service built with ASP.NET Core, Entity Framework Core, SQLite, Docker, and xUnit.
 
 SimplifyLink generates unique short URLs and tracks detailed analytics for every click — including timestamp, IP address, and User-Agent metadata.
 
-This project demonstrates backend engineering fundamentals such as REST API design, database indexing, async programming, dependency injection, caching readiness, and unit testing.
+This project demonstrates backend engineering fundamentals such as REST API design, database indexing, async programming, dependency injection, caching, Docker containerization, and cloud deployment.
 
 ---
 
-🚀 Features
+## 🌐 Live Demo
+
+🔹 Swagger API:  
+https://simplifylink-api.onrender.com/swagger/index.html
+
+🔹 Example Working Short Link:  
+https://simplifylink-api.onrender.com/521e23
+
+---
+
+## 🚀 Features
 
 - Generate unique 6-character short codes (GUID-based)
-- Redirect short URLs to original URLs
+- Public short link redirection
 - Track click count
 - Store detailed click metadata:
   - Timestamp (UTC)
   - IP address
   - User Agent
+- Real-time analytics (last 7 days)
 - Swagger API documentation
 - SQLite database persistence
+- Auto database migration on production startup
 - Unique index on `ShortCode`
 - Unit testing with xUnit (13 passing tests)
 - Clean layered architecture
 - Async + dependency injection best practices
+- Dockerized deployment (Render)
 
 ---
 
-🛠 Tech Stack
+## 🛠 Tech Stack
 
 - ASP.NET Core (.NET 9)
 - Entity Framework Core
 - SQLite
+- Docker
 - xUnit
 - Swagger / OpenAPI
-- MemoryCache (extensible for scaling)
+- MemoryCache
 
 ---
 
-📌 API Endpoints
+## 📌 API Endpoints
 
-🔹 Create Short Link
+### 🔹 Create Short Link
 
 **POST** `/api/links`
 
 **Request:**
+
 ```json
 {
-  "originalUrl": "http://google.com"
+  "originalUrl": "https://google.com"
 }
 ```
 
 **Response:**
+
 ```json
 {
   "id": 1,
-  "originalUrl": "http://google.com",
+  "originalUrl": "https://google.com",
   "shortCode": "abc123",
-  "shortUrl": "http://localhost:5292/abc123"
+  "shortUrl": "https://simplifylink-api.onrender.com/abc123"
 }
 ```
 
 ---
 
-🔹 Redirect
+### 🔹 Redirect
 
 **GET** `/{shortCode}`
 
 Example:
-```
-http://localhost:5292/abc123
-```
+
+https://simplifylink-api.onrender.com/abc123
 
 Redirects to the original URL and records click metadata.
 
 ---
 
-🔹 Analytics
+### 🔹 Analytics
 
-**GET** `/api/links/{id}/analytics`
+**GET** `/api/links/{id}/stats`
 
 Returns:
 - Click count
 - Total click events
-- Last 7-day statistics
+- Last 7-day breakdown
 
 ---
 
-🗄 Database
+## 🗄 Database
 
 SQLite database file:
+
 ```
 simplifylink.db
 ```
@@ -98,13 +114,14 @@ Tables:
 - `ClickEvents`
 
 Unique Index:
+
 ```
 IX_ShortLinks_ShortCode
 ```
 
 ---
 
-🧪 Running Tests
+## 🧪 Running Tests
 
 ```bash
 dotnet test
@@ -119,7 +136,7 @@ All tests currently passing.
 
 ---
 
-▶️ How to Run the Project
+## ▶️ Run Locally
 
 ```bash
 dotnet restore
@@ -127,27 +144,38 @@ dotnet ef database update
 dotnet run
 ```
 
-Then open:
+Open:
+
 ```
 https://localhost:5292/swagger
 ```
 
 ---
 
-💡 Engineering Concepts Demonstrated
+## 🐳 Run via Docker
+
+```bash
+docker build -t simplifylink .
+docker run -p 8080:8080 simplifylink
+```
+
+---
+
+## 💡 Engineering Concepts Demonstrated
 
 - RESTful API architecture
 - Database normalization & indexing
 - Async programming patterns
 - Dependency injection
 - Unit testing & separation of concerns
-- Clean backend design
-- Scalability considerations
-- Production-style development practices
+- Caching optimization
+- Docker containerization
+- Cloud deployment strategy
+- Production-style backend engineering
 
 ---
 
-👨‍💻 Author
+## 👨‍💻 Author
 
 Mohammed Akrama  
 Bachelor of Information Technology (Class of 2026)  
